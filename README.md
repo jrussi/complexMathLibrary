@@ -1,5 +1,5 @@
 # complexMathLibrary
-Complex Math Library
+JS Complex Math Library
 
 I think that the project name explains itself.
 
