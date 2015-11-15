@@ -47,74 +47,14 @@ getExp|exponential
 getInv|inverse value
 getSqrt|square root
 getSqr|square power
-	getASin| function(modoGraus) {var valor = new Complex(1-(this.re*this.re-this.im*this.im), -this.re*this.im*2);
-		var valor = new Complex(Math.sqrt(valor.abs)*Math.cos(valor.phiRad/2), Math.sqrt(valor.abs)*Math.sin(valor.phiRad/2));
-		var valor = new Complex(-this.im+valor.re, this.re+valor.im);
-		var saida = new Complex(valor.phiRad, -Math.log(valor.abs));
-		if ((modoGraus)&&(this.im==0)&&(this.re>=-1)&&(this.re<=1)) {
-			return new Complex(saida["re"]*180/Math.PI, 0);
-		}
-		else {
-			return saida;
-		}
-	},
-	//--------------------------------------------------------------------------------------//
-	getACos| function(modoGraus) {
-		var valor = new Complex(1-(this.re*this.re-this.im*this.im), -this.re*this.im*2);
-		var valor = new Complex(Math.sqrt(valor.abs)*Math.cos(valor.phiRad/2), Math.sqrt(valor.abs)*Math.sin(valor.phiRad/2));
-		var valor = new Complex(this.re+valor.im, this.im-valor.re);
-		var saida = new Complex(-valor.phiRad, Math.log(valor.abs));
-		if ((modoGraus)&&(this.im==0)&&(this.re>=-1)&&(this.re<=1)) {
-			return new Complex(saida["re"]*180/Math.PI, 0);
-		}
-		else {
-			return saida;
-		}
-	},
-	//--------------------------------------------------------------------------------------//
-	getATan| function(modoGraus) {
-		var valor1 = new Complex(1+this.im, -this.re);
-		var valor2 = new Complex(1-this.im, this.re);
-		var valor = new Complex(Math.log(valor1.abs)-Math.log(valor2.abs), valor1.phiRad-valor2.phiRad);
-		var saida = new Complex(-valor.im/2, valor.re/2);
-		if ((modoGraus)&&(this.im==0)&&(this.re>=-1)&&(this.re<=1)) {
-			return new Complex(saida["re"]*180/Math.PI, 0);
-		}
-		else {
-			return saida;
-		}
-	},
-	//--------------------------------------------------------------------------------------//
-	getSin| function(modoGraus) {//ok
-		if ((modoGraus)&&(this.im==0)) {
-			return new Complex(Math.sin(this.re*Math.PI/180), 0);
-		}
-		else {
-			return new Complex(Math.sin(this.re)*Math.cosh(this.im), Math.cos(this.re)*Math.sinh(this.im));
-		}
-	},
-	//--------------------------------------------------------------------------------------//
-	getCos| function(modoGraus) {//ok
-		if ((modoGraus)&&(this.im==0)) {
-			return new Complex(Math.cos(this.re*Math.PI/180), 0);
-		}
-		else {
-			return new Complex(Math.cos(this.re)*Math.cosh(this.im), -Math.sin(this.re)*Math.sinh(this.im));
-		}
-	},
-	//--------------------------------------------------------------------------------------//
-	getTan| function(modoGraus) {
-		if ((modoGraus)&&(this.im==0)) {
-			return new Complex(Math.tan(this.re*Math.PI/180), 0);
-		}
-		else {
-			return new Complex(Math.sin(this.re)*Math.cos(this.re)/(Math.pow(Math.cos(this.re),2)+Math.pow(Math.sinh(this.im),2)),
-				Math.sinh(this.im)*Math.cosh(this.im)/(Math.pow(Math.cos(this.re),2)+Math.pow(Math.sinh(this.im),2)));
-		}
-	},
-	//--------------------------------------------------------------------------------------//
-	getNeg| function() {return new Complex(-this.re, -this.im)},
-	//--------------------------------------------------------------------------------------//
+getASin|ArcSine
+getACos|ArcCosine
+getATan|ArcTangent
+getSin|Sine
+getCos|Cosine
+getTan|Tangent
+getNeg|Negates the number
+
 	//---Dois argumentos--------------------------------------------------------------------//
 	calcMinus: function(in0) {return new Complex(this.re-in0.re, this.im-in0.im);},
 	//--------------------------------------------------------------------------------------//
