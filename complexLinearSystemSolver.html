@@ -1,0 +1,686 @@
+<!--
+///////////////////////////////////////////////////////////////////////////////
+// Complex Linear System Solver
+// v. 1.0 - 2015-11-15
+// by JRussi
+///////////////////////////////////////////////////////////////////////////////
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head><title>Complex Linear System Solver</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+
+table.tblStack {
+	border-width: 2px;
+	border-spacing: 2px;
+	border-style: solid;
+	border-color: black;
+	border-collapse: collapse;
+}
+
+tr.zero {
+	background-color:#004000;
+	color:white;
+	font-weight:bold;
+	word-wrap: break-word;
+}
+
+tr.one {
+	background-color:#CCFFCC;
+	color:#003300;
+}
+
+tr.two {
+	background-color:#99FF99;
+	color:#003300;
+}
+
+td.tds {
+	border:none;
+	font-size:26px;
+	vertical-align: top;
+	width: 20%;
+	font-weight:bold;
+	background-color: #00A5FF;
+}
+
+td.tdStack {
+	border:none;
+	font-size:26px;
+	vertical-align: top;
+	text-align: right;
+	width: 20%;
+	font-weight:normal;
+}
+
+td.zero {
+	width:20%;
+	font-weight:bold;
+	font-size:20px;
+	border:1px solid #000000;
+}
+
+
+td.nonzero {
+	font-size:20px;
+	font-weight:normal;
+	border:1px solid #000000;
+}
+
+label {
+	display: block;
+}
+
+</style>
+<script src="complexMathLib.js"></script>
+<script src="complexMatrixLib.js"></script>
+
+<script type="text/javascript">
+
+//erro na 2a vez que entra em s.l.
+
+
+//undo arguments
+// JavaScript source code goes here
+var stack = [];
+var tamanhoStack = 10;
+var cmd = "";
+var modoRPN = true;
+var modoRetangular = true;
+var modoGraus = true;
+var modoMatricial = true;
+var backupStack = [];
+var args = [];
+var nl = '\x0A';//newline
+
+//resolução de sistema linear
+maxtr = 2;
+maxtd = maxtr;
+var matrizA = [];
+for(var i = 0; i < maxtr; i++) {
+	matrizA[i] = [];
+	for(var j = 0; j < maxtd; j++) {
+		matrizA[i][j] = new Complex(Math.random().toFixed(1)*10, Math.random().toFixed(1)*10);
+	}
+}
+var matrizB = [];
+for(var i = 0; i < maxtr; i++) {
+	matrizB[i] = [new Complex(Math.random().toFixed(1)*10, Math.random().toFixed(1)*10)];
+}
+var matrizX = [];
+for(var i = 0; i < maxtr; i++) {
+	matrizX[i] = 'x<sub>' + i + '</sub>';
+}
+var matrizM = [[new Complex(0, 0)]];
+
+
+//--------------------------------------------------------------------------------------//
+//--------------------------------------------------------------------------------------//
+//--------------------------------------------------------------------------------------//
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////
+function init() {
+	
+	resolverSistema();
+	
+
+
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////
+function formatarComplexo(matriz) {
+	//newdiv = document.createElement('div');
+
+	tbl = document.createElement('table');
+	tbl.className ="page";
+	tbl.style.display = "inline-block";
+	//var body = document.body.appendChild(tbl);
+	var color = "black";
+	var colorBack = "#BBFFBB";
+
+	for(var i = 0; i < matriz.length; i++) {
+		var tr = tbl.insertRow(-1);
+		for(var j = -1; j <= matriz[0].length; j++) {
+			if ((j == -1)||(j == matriz[0].length)) {
+				if (i == 0){
+					if ((matriz.length > 1)||(matriz[0].length > 1)) {
+						var td = tr.insertCell(-1);
+						if (j == -1) {
+							td.style.borderLeft = "2px solid " + color;// "[";
+						}
+						else {
+							td.style.borderRight = "2px solid " + color;// "]";
+						}
+						td.style.width = "1px";
+						td.style.borderTop = "2px solid " + color;
+						td.style.borderBottom = "2px solid " + color;
+						td.rowSpan = matriz.length;
+						td.style.backgroundColor = colorBack;
+					}
+				}
+			}
+			else {
+				var td = tr.insertCell(-1);
+				td.innerHTML = formatarNum(matriz[i][j]);
+				td.style.textAlign = "center";
+				td.style.backgroundColor = colorBack;
+				td.style.color = color;
+			}
+		}
+	}
+
+	function formatarNum(valor) {
+		if (modoRetangular) {
+			var pt1 = (valor["re"] != 0)?(trimZero(valor["re"])):((valor["im"] != 0)?(""):("0"));
+			var pt2 = (valor["im"] != 0)?((valor["im"] > 0)?("+j"):("-j")):("");
+			var pt3 = (valor["im"] != 0)?(trimZero(Math.abs(valor["im"]))):("");
+			var saida = pt1+pt2+pt3;
+			if (saida.substr(0,1)=='+') {saida = saida.substr(1,saida.length-1);}
+		}
+		else {
+			var saida = valor["abs"].toFixed(2) + '<u><b>/</b>' + valor["phi"].toFixed(2) + 'º</u>';
+		}
+		return saida;
+	}
+
+	function trimZero(valor) {
+		str = valor.toFixed(2);
+		return (str.indexOf('.00') < 0)?(str):(valor.toFixed(0))
+	}
+
+	return tbl.outerHTML;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+function criarTabelaValores(tableNum){
+	var par = true;
+	var tbl = document.createElement('table');
+	//tbl.id = tableNum;
+	tbl.className ="tblStack";
+	tdValores.appendChild(tbl);
+
+	var header = tbl.createTHead();
+	var tr = header.insertRow(0);
+	tr.className ="zero";
+	var keys = Object.keys(stack[0][0][0]);
+	for(var j = 0; j < keys.length; j++) {
+		var td = tr.insertCell(-1);
+		td.innerHTML = "<b>"+keys[j]+"</b>";
+		td.className = "zero";
+		td.style.width = "55px";
+		td.style.textAlign = "center";
+	}
+
+	for(var i = Object.keys(stack).length - 1; i >= 0; i--) {
+		var tr = tbl.insertRow(-1);
+		tr.className = (par)?("two"):("one");
+		tr.style.textAlign = "center";
+		par=!par;
+
+		for(var j = 0; j < keys.length; j++) {
+			var td = tr.insertCell(-1);
+			td.className = "nonzero";
+			switch(keys[j]) {
+				case "line":
+					td.innerHTML = stack[i].line;
+					break;
+				case "re":
+					td.innerHTML = formatarComplexo(stack[i].forEach2("getRe"));
+					break;
+				case "im":
+					td.innerHTML = formatarComplexo(stack[i].forEach2("getIm"));
+					break;
+				case "abs":
+					td.innerHTML = formatarComplexo(stack[i].forEach2("getAbs"));
+					break;
+				case "phi":
+					td.innerHTML = formatarComplexo(stack[i].forEach2("getPhi"));
+					break;
+				case "phiRad":
+					td.innerHTML = formatarComplexo(stack[i].forEach2("getPhiRad"));
+					break;
+			}
+		}
+	}
+	return tbl;
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+function criarTabelaComandos(tableNum){
+	var colunas = 4;
+	var par = true;
+	tbl = document.createElement('table');
+	tbl.id = tableNum;
+	tbl.className ="page";
+
+	var maxtd = 0;
+	var maxtr = 0;
+	var keys = Object.keys(comandos);
+	for(var i = 0; i < keys.length; i++) {
+		if (typeof(comandos[keys[i]]["pos"]) !== "undefined") {
+			if (comandos[keys[i]]["pos"][0] > maxtr) {
+				maxtr = comandos[keys[i]]["pos"][0];
+			}
+			if (comandos[keys[i]]["pos"][1] > maxtd) {
+				maxtd = comandos[keys[i]]["pos"][1];
+			}
+		}
+	}
+
+	var keys = Object.keys(comandos);
+	for(var i = 0; i <= maxtr; i++) {
+		var tr = tbl.insertRow(-1);
+		tr.className = (par)?("two"):("one");
+		par=!par;
+		for(var j = 0; j <= maxtd; j++) {
+			var td = tr.insertCell(-1);
+			td.className = "nonzero";
+			for(var k = 0; k < keys.length; k++) {
+				if (typeof(comandos[keys[k]]["pos"]) !== "undefined") {
+					if ((comandos[keys[k]]["pos"][0] == i)&&(comandos[keys[k]]["pos"][1] == j)) {
+						td.innerHTML = comandos[keys[k]]['label'];
+						td.onclick = comandos[keys[k]]['comando'];
+						td.style.width = "70px";
+						td.style.textAlign = "center";
+						td.title = comandos[keys[k]]['tooltip'];
+					}
+				}
+			}
+		}
+	}
+	return tbl;
+}
+///////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////
+function copyObject(origem) {var destino={};var keys = Object.keys(origem); for(var k=0; k<keys.length;k++) destino[k]=origem[k];return destino;}
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+function eng() {
+	teste(10000)
+	teste(1000)
+	teste(100)
+	teste(10)
+	teste(1)
+	teste(0.1)
+	teste(0.01)
+	teste(0.001)
+	teste(0.0001)
+	teste(0.00001)
+	teste(0.000001)
+	teste(0.0000001)
+	teste(0.00000001)
+	teste(0.000000001)
+
+	function formatEng(s) {
+		document.write(s + '<br>');
+
+		s2 = s.toExponential();
+		document.write(s2 + '<br>');
+
+		ePos = s2.indexOf('e');
+		expSignal = s2.substring(ePos+1,ePos+2);
+		exp = s2.substring(ePos+1,s2.length);
+
+		s3 = exp%3;
+		document.write('expSignal: ' + expSignal + ' exp: ' + exp + ' s3:' + s3 + '<br>');
+
+		if ((exp<0)&&(s3!==0)) {s3 += 3;}
+		s4 = s / Number('1e' + exp) * Number('1e' + s3);  //* [1, 10, 100][s3];
+		document.write(s4.toFixed(3) + 'e' + (exp-s3) + '<br><br><br>');
+	}
+}
+
+
+
+
+
+</script>
+</head>
+<body onload="init()">
+<h3>Complex Linear System Solver</h3>
+<h4>©JRussi 2015</h4>
+</body>
+
+<script type="text/javascript">
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+function resolverSistema() {
+	var newdiv = document.createElement('div');
+	newdiv.id="divMatriz";
+	newdiv.style.position = "absolute";
+	//newdiv.style.width = "1250px";
+	newdiv.style.width = "auto";
+	newdiv.style.height = "auto";
+	//newdiv.style.top = "700px";
+	//newdiv.style.right = "10px";
+	newdiv.style.align = "center";
+	newdiv.style.padding = "6px";
+	newdiv.style.background = "#FFFFFF";
+	newdiv.style.border = "2px solid #2266AA";
+	newdiv.style.zIndex = "100";
+	//newdiv.onresize = function() {alert('ok');};
+	//newdiv.innerHTML = "This is a floating javascript menu.";
+	document.body.appendChild(newdiv);
+	plotSistema(newdiv);
+	var incognitas = [];
+
+	// botão calcular
+	var newbutton = document.createElement("button");
+	var t = document.createTextNode("Calcular");
+	newbutton.appendChild(t);
+	newbutton.onclick = function() {
+		matrizA = [];
+		for(var i = 0; i < maxtr; i++) {
+			matrizA[i] = [];
+			for(var j = 0; j < maxtd; j++) {
+				matrizA[i][j] = parseComplexo(document.getElementById('mat' + i + '-' + j).innerText);
+			}
+		}
+
+		matrizB = [];
+		for(var i = 0; i < maxtr; i++) {
+			matrizB[i] = [];
+			matrizB[i][0] = parseComplexo(document.getElementById('mat' + i + '-' + (maxtd+3)).innerText);
+		}
+
+		var delta = matrizA.calcDeterminant();
+
+		var deltas = [];
+		for (var k = 0; k < matrizA.length; k++) {
+			incognitas[k] = [];
+			var matrizDelta = [];
+			for(var i = 0; i < maxtr; i++) {
+				matrizDelta[i] = [];
+				for(var j = 0; j < maxtd; j++) {
+					if (j !== k) {
+						matrizDelta[i][j] = matrizA[i][j];
+					}
+					else {
+						matrizDelta[i][j] = matrizB[i][0];
+					}
+				}
+			}
+			deltas[k] = matrizDelta.calcDeterminant();
+			incognitas[k][0] = deltas[k].calcDivision(delta);
+			document.getElementById('mat' + k + '-' + (maxtd+1)).innerHTML = formatarComplexo([[incognitas[k][0]]]);
+		};
+	}
+	newdiv.appendChild(newbutton);
+
+	newdiv.style.left = Math.floor((window.innerWidth - newdiv.offsetWidth)/2) + "px";
+	newdiv.style.top = Math.floor((window.innerHeight - newdiv.offsetHeight)/2) + "px";
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+function plotSistema(newdiv) {
+	var tbl = document.getElementById('tabelaSistema');
+	if (tbl  == null) {
+		var tbl = document.createElement('table');
+	}
+	else {
+		tbl.innerHTML = '';
+	}
+	tbl.id = 'tabelaSistema';
+	tbl.className ="page";
+	newdiv.appendChild(tbl);
+
+	maxtr = matrizA.length;
+	maxtd = maxtr;
+	var par = true;
+	for(var i = 0; i < maxtr + 1; i++) {
+		var tr = tbl.insertRow(-1);
+		tr.className = (par)?("two"):("one");
+		par=!par;
+		for(var j = 0; j < maxtd + 4; j++) {
+			var td = tr.insertCell(-1);
+			td.className = "nonzero";
+			td.style.textAlign = "center";
+			td.id = 'mat' + i + '-' + j;
+			//td.title = "comandos[keys[k]]['tooltip']";//
+			if (i < maxtr) {
+				if (j < maxtd) {
+					td.innerHTML = formatarComplexo([[matrizA[i][j]]]);
+					td.onclick = function() {entrarComplexo(this);};
+					td.style.width = "70px";
+				}
+				if (j == maxtd) {
+					td.className = "blank";
+					td.innerHTML = (i == Math.round(maxtr/2 - 1))?("x"):("");
+				}
+				if (j == maxtd+1) {
+					//td.className = "blank";
+					td.innerHTML = matrizX[i];
+					td.style.width = "70px";
+					//td.onclick = function() {entrarComplexo();};
+				}
+				if (j == maxtd+2) {
+					td.className = "blank";
+					td.innerHTML = (i == Math.round(maxtr/2 - 1))?("="):("");
+				}
+				if (j == maxtd+3) {
+					td.innerHTML = formatarComplexo([[matrizB[i][0]]]);
+					td.onclick = function() {entrarComplexo(this);};
+					td.style.width = "70px";
+				}
+			}
+			else {
+				td.className = "blank";
+				td.innerHTML = (j == maxtd)?("➘"):("");
+				td.onclick = function() {
+					matrizA[matrizA.length] = [];
+					for (var i = 0; i < matrizA[0].length; i++) {
+						matrizA[matrizA.length-1].push(new Complex(0,0));
+					};
+					for (var i = 0; i < matrizA.length; i++) {
+						matrizA[i].push(new Complex(0,0));
+					};
+					matrizB.push([new Complex(0,0)]);
+					matrizX.push('x<sub>' + (matrizA.length - 1) + '</sub>');
+					plotSistema(newdiv);
+				};
+			}
+		}
+	}
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+function inputMatriz() {
+	var enableMove = false;
+	var newdiv = document.createElement('div');
+	newdiv.id="divMatriz";
+	newdiv.style.position = "absolute";
+	//newdiv.style.width = "1250px";
+	newdiv.style.width = "auto";
+	newdiv.style.height = "auto";
+	//newdiv.style.top = "700px";
+	//newdiv.style.right = "10px";
+	newdiv.style.align = "center";
+	newdiv.style.padding = "6px";
+	newdiv.style.background = "#FFFFFF";
+	newdiv.style.border = "2px solid #2266AA";
+	newdiv.style.zIndex = "100";
+	var origemX = 0;
+	var origemY = 0;
+
+	//newdiv.onresize = function() {alert('ok');};
+	//newdiv.innerHTML = "This is a floating javascript menu.";
+	document.body.appendChild(newdiv);
+
+
+
+	var tbl = document.getElementById('tabelaSistema');
+	if (tbl  == null) {
+		var tbl = document.createElement('table');
+	}
+	else {
+		tbl.innerHTML = '';
+	}
+	tbl.id = 'tabelaComandos2';
+	tbl.className ="page";
+	newdiv.appendChild(tbl);
+
+	var comandos = {0: {0: {label: "+Col", comando: function() {
+		for (var i = 0; i < matrizM.length; i++) {
+		matrizM[i].push(new Complex(0, 0));
+		};
+		inputMatriz();
+	}},
+	1: {label: "-Col", comando: function() {
+		for (var i = 0; i < matrizM.length; i++) {
+			matrizM[i].splice(matrizM[i].length-1,1);
+		};
+		inputMatriz();
+	}},
+	2: {label: "+Lin", comando: function() {
+		var novaLinha = [];
+		for (var i = 0; i < matrizM[0].length; i++) {
+			novaLinha.push(new Complex(0, 0));
+		};
+		matrizM.push(novaLinha);
+		inputMatriz();
+	}},
+	3: {label: "-Lin", comando: function() {
+		matrizM.splice(matrizM.length-1,1);
+		inputMatriz();
+	}}},
+	1:{
+	0: {label: "Enter", comando: function() {
+		//matrizM = [];
+		for(var i = 0; i < matrizM.length; i++) {
+			//matrizM[i] = [];
+			for(var j = 0; j < matrizM[0].length; j++) {
+				matrizM[i][j] = parseComplexo(document.getElementById('mat' + i + '-' + j).innerHTML);
+			}
+		}
+		updateTabelaValores(matrizM, +1);
+		updateStack();
+	}},
+	1: {label: "Fechar", comando: function() {
+		var object = document.getElementById('divMatriz');
+		object.parentNode.removeChild(object);
+	}},
+	}};
+
+	// plot comandos
+	par = false;
+	var keys = Object.keys(comandos);
+	for(var i = 0; i < keys.length; i++) {
+		var tr = tbl.insertRow(-1);
+		tr.className = (par)?("two"):("one");
+		par=!par;
+		var keys2 = Object.keys(comandos[i]);
+		for(var j = 0; j < keys2.length; j++) {
+			var td = tr.insertCell(-1);
+			td.className = "nonzero";
+			td.style.textAlign = "center";
+			//td.id = 'mat' + i + '-' + j;
+			td.i = i;
+			td.j = j;
+			td.innerHTML = comandos[i][j].label;
+			td.onclick = function() {comandos[this.i][this.j].comando();};
+			td.style.width = "60px";
+		}
+	}
+
+	newdiv.style.left = Math.floor((window.innerWidth - newdiv.offsetWidth)/2) + "px";
+	newdiv.style.top = Math.floor((window.innerHeight - newdiv.offsetHeight)/2) + "px";
+
+	var tbl = document.getElementById('tabelaSistema');
+	if (tbl  == null) {
+		var tbl = document.createElement('table');
+	}
+	else {
+		tbl.innerHTML = '';
+	}
+	tbl.id = 'tabelaSistema';
+	tbl.className ="page";
+	newdiv.appendChild(tbl);
+
+	var par = true;
+	for(var i = 0; i < matrizM.length; i++) {
+		var tr = tbl.insertRow(-1);
+		tr.className = (par)?("two"):("one");
+		par=!par;
+		for(var j = 0; j < matrizM[0].length; j++) {
+			var td = tr.insertCell(-1);
+			td.className = "nonzero";
+			td.style.textAlign = "center";
+			td.id = 'mat' + i + '-' + j;
+			td.innerHTML = formatarComplexo([[matrizM[i][j]]]);
+			td.onclick = function() {entrarComplexo(this);};
+			td.style.width = "70px";
+		}
+	}
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+function entrarComplexo(origem) {
+	var valor = prompt("Digitar o número", "x+jy");
+	if (valor != null) {
+		origem.innerHTML = valor;
+	}
+	var divMatriz = document.getElementById('divMatriz');
+	divMatriz.style.left = Math.floor((window.innerWidth - divMatriz.offsetWidth)/2) + "px";
+	divMatriz.style.top = Math.floor((window.innerHeight - divMatriz.offsetHeight)/2) + "px";
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+function parseComplexo(cmd) {
+	cmd = cmd.replace('"','');
+	cmd = cmd.replace('\'','');
+	cmd = cmd.replace(',','.');
+	//document.getElementById('tdBatch').innerHTML += "cmd = '" + cmd + "';// Enter<br>";
+	cmd = cmd.replace(/([+-])/g,'|$1');
+	var res = cmd.split(/[|]/);
+	if (cmd.match(/(i|I|j|J)/)) {
+		for (var i = 0; i < res.length; i++) {
+			if (res[i].indexOf('j')<0) {
+				var ptReal =  res[i].replace('j',"");
+			}
+			else {
+				var ptIm =  res[i].replace('j',"");
+				if (ptIm == '') {	ptIm = '1'}
+				if (ptIm == '-') {	ptIm = '-1'}
+				if (ptIm == '+') {	ptIm = '1'}
+			}
+		};
+	var valor = new Complex((parseFloat(ptReal)||0), (parseFloat(ptIm)||0));
+	}
+	else {
+		if (cmd.match(/(@)/)) {
+			var ptMod=cmd.substring(0,cmd.indexOf('@'));
+			var ptAng=cmd.substring(cmd.indexOf('@')+1,cmd.length);
+			var valor = new Complex((parseFloat(ptMod)*Math.cos(parseFloat(ptAng)*Math.PI/180)||0), (parseFloat(ptMod)*Math.sin(parseFloat(ptAng)*Math.PI/180)||0));
+		}
+		else {
+			if (cmd.match(/(;)/)) {
+				var ptReal=cmd.substring(0,cmd.indexOf(';'));
+				var ptIm=cmd.substring(cmd.indexOf(';')+1,cmd.length);
+				var valor = new Complex((parseFloat(ptReal)||0), (parseFloat(ptIm)||0));
+			}
+			else {
+				var ptReal=cmd;
+				var ptIm=0;
+				var valor = new Complex((parseFloat(ptReal)||0), (parseFloat(ptIm)||0));
+			}
+		}
+	}
+	return valor;
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+</script>
+</html>
