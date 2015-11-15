@@ -26,11 +26,5 @@ cmpx1[""]:
 
 
 
-	<script src="complexMathLib.js"></script>
-	<script src="matrizLib.js"></script>
-
-	<script type="text/javascript">
-	alert("ok")
-	
-	
-	</script>
+Use the following ling to render the example:
+https://cdn.rawgit.com/jrussi/complexMathLibrary/master/example.html

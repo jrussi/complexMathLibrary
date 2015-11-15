@@ -5,15 +5,23 @@
 </head>
 
 <body>
-	body
+<h3>Example:</h3><br>
 	<script src="complexMathLib.js"></script>
 	<script src="matrizLib.js"></script>
 
-	<script type="text/javascript">
-	alert("ok")
+
+	<div id="ex">
+		
+	</div>
+		<script type="text/javascript">
+		var cmpx1 = new Complex(Math.random().toFixed(1)*10, Math.random().toFixed(1)*10);
+		var cmpx2 = new Complex(Math.random().toFixed(1)*10, Math.random().toFixed(1)*10);
+		var cmpx3 = cmpx1.calcSoma(cmpx2);
 	
+		document.getElementById("ex").innerHTML = "arg1: "+ cmpx1.re + " + j" + cmpx1.im + "<br>" +
+			"arg2: "+ cmpx2.re + " + j" + cmpx2.im + "<br>" +
+			"resultado: "+ cmpx3.re + " + j" + cmpx3.im + "<br>";
 	
 	</script>
-	
 </body>
 </html>
