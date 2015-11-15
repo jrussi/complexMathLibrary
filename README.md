@@ -21,10 +21,10 @@ When a complex number is created the following properties are filled automatical
 
 Property | Meaning
 -----------|-----------
-Complex.re | real part;
-Complex.im | imaginary part;
-Complex.abs | absolute value;
-Complex.phi | angle in degrees;
+Complex.re | real part
+Complex.im | imaginary part
+Complex.abs | absolute value
+Complex.phi | angle in degrees
 Complex.phiRad | angle in radians
 
 ##Methods
@@ -41,10 +41,10 @@ Method|Returns
 getRe|real part
 getIm|imaginary part
 getAbs|absolute value
-getPhi|angle in degrees;
+getPhi|angle in degrees
 getPhiRad|angle in radians
 getConj|complex conjugate
-getLN|logarithm (base e)
+getLN|natural logarithm
 getExp|exponential
 getInv|inverse value
 getSqrt|square root
@@ -64,7 +64,7 @@ Complex.Method(second_argument)
 ```
 
 Method|Returns|Example
--------|---|--
+----------|--------|---------
 calcMinus|A - B|A.calcMinus(B)
 calcSum|A + B|A.calcSum(B)
 calcDivision|A / B|A.calcMinus(B)
