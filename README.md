@@ -23,3 +23,14 @@ cmpx1["im"] - imaginary part;
 cmpx1["abs"] - absolute value;
 cmpx1[""]:
 ```js
+
+
+
+	<script src="complexMathLib.js"></script>
+	<script src="matrizLib.js"></script>
+
+	<script type="text/javascript">
+	alert("ok")
+	
+	
+	</script>
