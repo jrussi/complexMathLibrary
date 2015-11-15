@@ -69,8 +69,8 @@ calcMinus|A - B|A.calcMinus(B)
 calcSum|A + B|A.calcSum(B)
 calcDivision|A / B|A.calcMinus(B)
 calcProduct|A * B|A.calcMinus(B)
-calcXPowerY|X^Y|X.calcXPowerY(Y)
-calcXRootY|X^(1/Y)|X.calcXRootY(Y)
+calcXPowerY|X ^ Y|X.calcXPowerY(Y)
+calcXRootY|X ^ (1/Y)|X.calcXRootY(Y)
 
 
 Use the following ling to render the example:
