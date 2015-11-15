@@ -110,6 +110,6 @@ formatMatrix|shows a complex number/matrix|formatMatrix([[new Complex(2,3),new C
 
 
 
-#Live example
-Use the following link to render some examples:
-[Live example](https://rawgit.com/jrussi/complexMathLibrary/master/example.html)
+#Live example2
+[Simple live example](https://rawgit.com/jrussi/complexMathLibrary/master/example.html)
+[Complex Linear System Solver](https://rawgit.com/jrussi/complexMathLibrary/master/complexLinearSystemSolver.html)
