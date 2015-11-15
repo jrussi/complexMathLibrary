@@ -1,4 +1,4 @@
-function parseComplexo(cmd) {
+function parseComplex(cmd) {
 	cmd = cmd.replace('"','');
 	cmd = cmd.replace('\'','');
 	cmd = cmd.replace(',','.');
@@ -42,7 +42,7 @@ function parseComplexo(cmd) {
 }
 
 
-function formatarComplexo(matriz) {
+function formatMatrix(matriz,polar) {
 	//newdiv = document.createElement('div');
 
 	tbl = document.createElement('table');
@@ -75,7 +75,7 @@ function formatarComplexo(matriz) {
 			}
 			else {
 				var td = tr.insertCell(-1);
-				td.innerHTML = formatarNum(matriz[i][j]);
+				td.innerHTML = formatNum(matriz[i][j],polar);
 				td.style.textAlign = "center";
 				td.style.backgroundColor = colorBack;
 				td.style.color = color;
@@ -83,8 +83,11 @@ function formatarComplexo(matriz) {
 		}
 	}
 
-	function formatarNum(valor) {
-		if (modoRetangular) {
+	function formatNum(valor,polar) {
+		if (typeof(polar)==undefined){
+			var polar = false;
+		}
+		if (!polar) {
 			var pt1 = (valor["re"] != 0)?(trimZero(valor["re"])):((valor["im"] != 0)?(""):("0"));
 			var pt2 = (valor["im"] != 0)?((valor["im"] > 0)?("+j"):("-j")):("");
 			var pt3 = (valor["im"] != 0)?(trimZero(Math.abs(valor["im"]))):("");
@@ -102,5 +105,5 @@ function formatarComplexo(matriz) {
 		return (str.indexOf('.00') < 0)?(str):(valor.toFixed(0))
 	}
 
-	return tbl.outerHTML;
+	return tbl;
 }

@@ -52,7 +52,7 @@ Array.prototype.calcDeterminant = function(){ //method sig. takes a this (two di
 			s = new Complex(-1, 0);
 		}
 		//sum+=s*this[0][i]*(determinant(smaller));// recursive step: determinant of larger determined by smaller.
-		sum = sum.calcSoma( this[0][i].calcProduct((smaller.determinante()).calcProduct(s)));// recursive step: determinant of larger determined by smaller.
+		sum = sum.calcSum( this[0][i].calcProduct((smaller.calcDeterminant()).calcProduct(s)));// recursive step: determinant of larger determined by smaller.
 	}
 	return(sum); //returns determinant value. once stack is finished, returns final determinant.
 };

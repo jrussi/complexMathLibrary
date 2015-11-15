@@ -4,49 +4,181 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 
-<body>
+
 	<script src="complexMathLib.js"></script>
-	<script src="matrizLib.js"></script>
+	<script src="complexMatrixLib.js"></script>
+	<script src="complexIO.js"></script>
+	<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	<style type="text/css"></style>
+	<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/lang-css.js"></script>
 	
+<body>	
 	<h2>Examples:</h2>
 	Refresh do get different results
 	
 	<h3>complexMathLib.js</h3>
-	<br><br>
 	
-	<div id="ex1"><br>
+	<pre class="prettyprint">
+//define two random complex numbers
+var cmpx1 = new Complex(Math.random().toFixed(1)*10, Math.random().toFixed(1)*10);
+var cmpx2 = new Complex(Math.random().toFixed(1)*10, Math.random().toFixed(1)*10);
+//the result will be the sum of the first two vars
+var cmpx3 = cmpx1.calcSum(cmpx2);
+//append results to element ex1
+ex1.appendChild(formatMatrix([[cmpx1]]));
+ex1.appendChild(document.createTextNode("+"));
+ex1.appendChild(formatMatrix([[cmpx2]]));
+ex1.appendChild(document.createTextNode("="));
+ex1.appendChild(formatMatrix([[cmpx3]]));
+	</pre>
 	
-	<h3>complexMathLib.js</h3>
-	
-	
-	<div id="ex2"><br>
-	
-	
-
-
-		
-		
-		
-		
-		
-	</div>
-		<script type="text/javascript">
+	<div id="ex1"><br></div>
+	<script type="text/javascript">
 		var cmpx1 = new Complex(Math.random().toFixed(1)*10, Math.random().toFixed(1)*10);
 		var cmpx2 = new Complex(Math.random().toFixed(1)*10, Math.random().toFixed(1)*10);
 		var cmpx3 = cmpx1.calcSum(cmpx2);
+	 
+		ex1.appendChild(formatMatrix([[cmpx1]]));
+		ex1.appendChild(document.createTextNode("+"));
+		ex1.appendChild(formatMatrix([[cmpx2]]));
+		ex1.appendChild(document.createTextNode("="));
+		ex1.appendChild(formatMatrix([[cmpx3]]));
+	</script>
+	<br><br>
+	<h3>complexMatrixLib.js</h3>
 	
-		document.getElementById("ex1").innerHTML = "arg1: "+ cmpx1.re + " + j" + cmpx1.im + "<br>" +
-			"arg2: "+ cmpx2.re + " + j" + cmpx2.im + "<br>" +
-			"result: "+ cmpx3.re + " + j" + cmpx3.im + "<br>";
-			
-			
-			var cmpx11 = new Complex(4,5);
+	<pre class="prettyprint">
+//define 4 numbers
+var cmpx11 = new Complex(4,5);
 var cmpx12 = new Complex(2,6);
 var cmpx21 = new Complex(4,4);
 var cmpx22 = new Complex(1,5);
-
+//create matrix
 var mat = [[cmpx11, cmpx12], [cmpx21, cmpx22]];
+//calculate the determinant
+var matDet = mat.calcDeterminant();
+//append results to element ex2
+ex2.appendChild(document.createTextNode("Determinant("));
+ex2.appendChild(formatMatrix(mat);
+ex2.appendChild(document.createTextNode(") = "));
+ex2.appendChild(formatMatrix(matDet));
+	</pre>
 	
+	<div id="ex2"><br></div>
+	<script type="text/javascript">
+		//define 4 numbers
+		var cmpx11 = new Complex(4,5);
+		var cmpx12 = new Complex(2,6);
+		var cmpx21 = new Complex(4,4);
+		var cmpx22 = new Complex(1,5);
+		//create matrix
+		var mat = [[cmpx11, cmpx12], [cmpx21, cmpx22]];
+		//calculate the determinant
+		var matDet = mat.calcDeterminant();
+		//append results to element ex2
+		ex2.appendChild(document.createTextNode("Determinant("));
+		ex2.appendChild(formatMatrix(mat));
+		ex2.appendChild(document.createTextNode(") = "));
+		ex2.appendChild(formatMatrix([[matDet]]));
 	</script>
+	
+	<h3>complexIO.js</h3>
+	<h4>(a) show complex - rectangular</h4>
+	<pre class="prettyprint">
+//define complex number
+var cmpx1 = new Complex(4,5);
+//show complex
+ex3a.appendChild(formatMatrix([[cmpx1]]));
+	</pre>
+	<div id="ex3a"><br></div>
+	
+	<script type="text/javascript">
+		//define complex number
+		var cmpx1 = new Complex(4,5);
+		//show complex
+		ex3a.appendChild(formatMatrix([[cmpx1]]));
+	</script>
+	
+	
+	<h4>(b) show complex - polar</h4>
+	<pre class="prettyprint">
+//define complex number
+var cmpx1 = new Complex(4,5);
+//show complex
+ex3b.appendChild(formatMatrix([[cmpx1]],true));
+	</pre>
+	<div id="ex3b"><br></div>
+	
+	<script type="text/javascript">
+		//define complex number
+		var cmpx1 = new Complex(4,5);
+		//show complex
+		ex3b.appendChild(formatMatrix([[cmpx1]],true));
+	</script>
+	
+	
+	<h4>(c) show complex matrix - polar</h4>
+	<pre class="prettyprint">
+//define 4 numbers
+var cmpx11 = new Complex(4,5);
+var cmpx12 = new Complex(2,6);
+var cmpx21 = new Complex(4,4);
+var cmpx22 = new Complex(1,5);
+//create matrix
+var mat = [[cmpx11, cmpx12], [cmpx21, cmpx22]];
+//show complex
+ex3c.appendChild(formatMatrix(mat,true));
+	</pre>
+	<div id="ex3c"><br></div>
+	
+	<script type="text/javascript">
+		//define 4 numbers
+		var cmpx11 = new Complex(4,5);
+		var cmpx12 = new Complex(2,6);
+		var cmpx21 = new Complex(4,4);
+		var cmpx22 = new Complex(1,5);
+		//create matrix
+		var mat = [[cmpx11, cmpx12], [cmpx21, cmpx22]];
+		//show complex
+		ex3c.appendChild(formatMatrix(mat,true));
+	</script>
+		
+		
+
+	<h4>(d) input complex - rectangular</h4>
+	<pre class="prettyprint">
+//define complex number
+var cmpx1 = parseComplex("4+j5");
+//show complex
+ex3d.appendChild(formatMatrix([[cmpx1]]));
+	</pre>
+	<div id="ex3d"><br></div>
+	
+	<script type="text/javascript">
+		//define complex number
+		var cmpx1 = parseComplex("4+j5");
+		//show complex
+		ex3d.appendChild(formatMatrix([[cmpx1]]));
+	</script>
+		
+
+	<h4>(e) input complex - polar</h4>
+	<pre class="prettyprint">
+//define complex number - modulus @ angle
+var cmpx1 = parseComplex("4@30");
+//show complex
+ex3e.appendChild(formatMatrix([[cmpx1]],true));
+	</pre>
+	<div id="ex3e"><br></div>
+	
+	<script type="text/javascript">
+		//define complex number - modulus @ angle
+		var cmpx1 = parseComplex("4@30");
+		//show complex
+		ex3e.appendChild(formatMatrix([[cmpx1]],true));
+	</script>
+	
+	
+
 </body>
 </html>
