@@ -23,9 +23,9 @@ Complex.im - imaginary part;
 Complex.abs - absolute value;
 Complex.phi - angle in degrees;
 Complex.phiRad - angle in radians
-```js
+```
 
 
 
 Use the following ling to render the example:
-[Live example]()https://rawgit.com/jrussi/complexMathLibrary/master/example.html)
+[Live example](https://rawgit.com/jrussi/complexMathLibrary/master/example.html)
