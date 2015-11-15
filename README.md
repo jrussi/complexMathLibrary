@@ -17,6 +17,7 @@ var cmpx2 = new Complex(Math.random().toFixed(1)*10, Math.random().toFixed(1)*10
 ```
 
 When a complex number is created the following properties are filled automatically:
+
 Property | Meaning
 -----------|-----------
 Complex.re | real part;
