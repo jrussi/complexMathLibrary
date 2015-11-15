@@ -5,7 +5,7 @@
 	//return this;
 } */
 
-Array.prototype.calcProdutoMatricial = function(in0) {
+Array.prototype.calcMatrixMultiplication = function(in0) {
 		var valor = [],
 		newWidth = in0[0].length,
 		newHeight = this.length;
@@ -18,7 +18,7 @@ Array.prototype.calcProdutoMatricial = function(in0) {
 				//calculating sum of pairwise products
 				for (var index = 0; index < this[0].length; index++) {
 					//sum = calcSoma( calcProduct(this[row][index], in0[index][column])	 , sum);
-					sum = sum.calcSoma( this[row][index].calcProduct(in0[index][column]) );
+					sum = sum.calcSum( this[row][index].calcProduct(in0[index][column]) );
 				}
 			valor[row][column] = sum;
 			}
@@ -26,7 +26,7 @@ Array.prototype.calcProdutoMatricial = function(in0) {
 		return valor;
 	};
 	//--------------------------------------------------------------------------------------//
-Array.prototype.determinante = function(){ //method sig. takes a this (two dimensional array), returns determinant.
+Array.prototype.calcDeterminant = function(){ //method sig. takes a this (two dimensional array), returns determinant.
 	var sum = new Complex(0, 0);
 	var s;
 	if(this.length==1){	 //bottom case of recursion. size 1 this determinant is itself.
@@ -57,7 +57,7 @@ Array.prototype.determinante = function(){ //method sig. takes a this (two dimen
 	return(sum); //returns determinant value. once stack is finished, returns final determinant.
 };
 //--------------------------------------------------------------------------------------//
-Array.prototype.inversa = function(){
+Array.prototype.calcInverse = function(){
 		// I use Guassian Elimination to calculate the inverse:
 		// (1) 'augment' the matrix (left) by the identity (on the right)
 		// (2) Turn the matrix on the left into the identity by elemetry row ops

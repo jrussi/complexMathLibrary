@@ -1,4 +1,4 @@
-# complexMathLibrary
+# complexMathLib.js
 JS Complex Math Library
 
 This is a complex math library written in javascript.
@@ -75,3 +75,31 @@ calcXRootY|X ^ (1/Y)|X.calcXRootY(Y)
 
 Use the following ling to render the example:
 [Live example](https://rawgit.com/jrussi/complexMathLibrary/master/example.html)
+
+#ComplexMatrixLib.js
+
+This is a complex matrix library written in javascript.
+
+##Usage:
+First thing, create a complex matrix:
+
+Ex1: Creating a number = 4 + j5 (j is the imaginary number)
+```js
+var cmpx11 = new Complex(4,5);
+var cmpx12 = new Complex(2,6);
+var cmpx21 = new Complex(4,4);
+var cmpx22 = new Complex(1,5);
+
+var mat = [[cmpx11, cmpx12], [cmpx21, cmpx22]];
+```
+
+Method|Returns|Example
+----------|--------|---------
+calcMatrixMultiplication|[A]x[B]|A.calcMatrixMultiplication(B)
+calcDeterminant|determinant(A)|A.determinant()
+calcInverse|1 / A|A.calcInverse()
+
+###Credits:
+Matrix multiplication was adapted from http://stackoverflow.com/questions/27205018/multiply-2-matrices-in-javascript
+Matrix determina was adapted from http://professorjava.weebly.com/matrix-determinant.html.
+Inverse matrix code was adapted from Andrew Ippoliti's Blog.

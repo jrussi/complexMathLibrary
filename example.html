@@ -5,13 +5,29 @@
 </head>
 
 <body>
-<h3>Example:</h3>
-Refresh do get different results<br><br>
 	<script src="complexMathLib.js"></script>
 	<script src="matrizLib.js"></script>
+	
+	<h2>Examples:</h2>
+	Refresh do get different results
+	
+	<h3>complexMathLib.js</h3>
+	<br><br>
+	
+	<div id="ex1"><br>
+	
+	<h3>complexMathLib.js</h3>
+	
+	
+	<div id="ex2"><br>
+	
+	
 
 
-	<div id="ex">
+		
+		
+		
+		
 		
 	</div>
 		<script type="text/javascript">
@@ -19,9 +35,17 @@ Refresh do get different results<br><br>
 		var cmpx2 = new Complex(Math.random().toFixed(1)*10, Math.random().toFixed(1)*10);
 		var cmpx3 = cmpx1.calcSum(cmpx2);
 	
-		document.getElementById("ex").innerHTML = "arg1: "+ cmpx1.re + " + j" + cmpx1.im + "<br>" +
+		document.getElementById("ex1").innerHTML = "arg1: "+ cmpx1.re + " + j" + cmpx1.im + "<br>" +
 			"arg2: "+ cmpx2.re + " + j" + cmpx2.im + "<br>" +
 			"result: "+ cmpx3.re + " + j" + cmpx3.im + "<br>";
+			
+			
+			var cmpx11 = new Complex(4,5);
+var cmpx12 = new Complex(2,6);
+var cmpx21 = new Complex(4,4);
+var cmpx22 = new Complex(1,5);
+
+var mat = [[cmpx11, cmpx12], [cmpx21, cmpx22]];
 	
 	</script>
 </body>
