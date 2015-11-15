@@ -95,9 +95,9 @@ var mat = [[cmpx11, cmpx12], [cmpx21, cmpx22]];
 
 Method|Returns|Example
 ----------|--------|---------
-calcMatrixMultiplication|[A]x[B]|A.calcMatrixMultiplication(B)
-calcDeterminant|determinant(A)|A.determinant()
-calcInverse|1 / A|A.calcInverse()
+calcMatrixMultiplication|[M1]x[M2]|M1.calcMatrixMultiplication(M2)
+calcDeterminant|determinant(M1)|M1.determinant()
+calcInverse|1 / M1|M1.calcInverse()
 
 ###Credits:
 Matrix multiplication was adapted from http://stackoverflow.com/questions/27205018/multiply-2-matrices-in-javascript
