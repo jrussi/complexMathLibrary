@@ -73,9 +73,6 @@ calcXPowerY|X ^ Y|X.calcXPowerY(Y)
 calcXRootY|X ^ (1/Y)|X.calcXRootY(Y)
 
 
-Use the following ling to render the example:
-[Live example](https://rawgit.com/jrussi/complexMathLibrary/master/example.html)
-
 #ComplexMatrixLib.js
 
 This is a complex matrix library written in javascript.
@@ -103,3 +100,16 @@ calcInverse|1 / M1|M1.calcInverse()
 Matrix multiplication was adapted from http://stackoverflow.com/questions/27205018/multiply-2-matrices-in-javascript
 Matrix determina was adapted from http://professorjava.weebly.com/matrix-determinant.html.
 Inverse matrix code was adapted from Andrew Ippoliti's Blog.
+
+#complexIOLib.js
+
+Method|Returns|Example
+----------|--------|---------
+parseComplex()|used to input a complex number|parseComplex("2+j2")
+formatMatrix|shows a complex number/matrix|formatMatrix([[new Complex(2,3),new Complex(4,2)]])
+
+
+
+
+Use the following ling to render the example:
+[Live example](https://rawgit.com/jrussi/complexMathLibrary/master/example.html)
