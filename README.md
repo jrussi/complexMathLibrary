@@ -97,8 +97,8 @@ calcDeterminant|determinant(M1)|M1.determinant()
 calcInverse|1 / M1|M1.calcInverse()
 
 ###Credits:
-Matrix multiplication was adapted from http://stackoverflow.com/questions/27205018/multiply-2-matrices-in-javascript
-Matrix determina was adapted from http://professorjava.weebly.com/matrix-determinant.html.
+Matrix multiplication was adapted from http://stackoverflow.com/questions/27205018/multiply-2-matrices-in-javascript  
+Matrix determina was adapted from http://professorjava.weebly.com/matrix-determinant.html.  
 Inverse matrix code was adapted from Andrew Ippoliti's Blog.
 
 #complexIOLib.js
@@ -110,6 +110,6 @@ formatMatrix|shows a complex number/matrix|formatMatrix([[new Complex(2,3),new C
 
 
 
-#Live example2
-[Simple live example](https://rawgit.com/jrussi/complexMathLibrary/master/example.html)
+#Live examples
+[Simple live example](https://rawgit.com/jrussi/complexMathLibrary/master/example.html)  
 [Complex Linear System Solver](https://rawgit.com/jrussi/complexMathLibrary/master/complexLinearSystemSolver.html)
