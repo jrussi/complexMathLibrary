@@ -17,15 +17,16 @@ var cmpx2 = new Complex(Math.random().toFixed(1)*10, Math.random().toFixed(1)*10
 ```
 
 When a complex number is created the following properties are filled automatically:
-```js
-Complex.re - real part;
-Complex.im - imaginary part;
-Complex.abs - absolute value;
-Complex.phi - angle in degrees;
-Complex.phiRad - angle in radians
-```js
+Property | Meaning
+-----------|-----------
+Complex.re | real part;
+Complex.im | imaginary part;
+Complex.abs | absolute value;
+Complex.phi | angle in degrees;
+Complex.phiRad | angle in radians
+
 
 
 
 Use the following ling to render the example:
-[Live example]()https://rawgit.com/jrussi/complexMathLibrary/master/example.html)
+[Live example](https://rawgit.com/jrussi/complexMathLibrary/master/example.html)
