@@ -26,7 +26,5 @@ Complex.phi | angle in degrees;
 Complex.phiRad | angle in radians
 
 
-
-
 Use the following ling to render the example:
 [Live example](https://rawgit.com/jrussi/complexMathLibrary/master/example.html)
