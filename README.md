@@ -7,6 +7,14 @@ Usage:
 First thing, create a compplex number:
 
 Ex1: Creating a number = 4 + j5 (j is the imaginary number)
+```js
+var cmpx1 = new Complex(4,5);//uses rectangular notation
+```
+
+```javascript
+var cmpx1 = new Complex(4,5);//uses rectangular notation
+```
+
 var cmpx1 = new Complex(4,5);//uses rectangular notation
 
 Ex2: Creating a number with random integer real and imaginary parts
