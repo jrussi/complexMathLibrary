@@ -126,36 +126,30 @@ Complex.prototype = {
 	//--------------------------------------------------------------------------------------//
 	getNeg: function() {return new Complex(-this.re, -this.im)},
 	//--------------------------------------------------------------------------------------//
-//---Dois argumentos--------------------------------------------------------------------//
-calcMinus: function(in0) {return new Complex(this.re-in0.re, this.im-in0.im);},
-//--------------------------------------------------------------------------------------//
-calcSoma: function(in0) {return new Complex(this.re+in0.re, this.im+in0.im);},
-//--------------------------------------------------------------------------------------//
-calcDivision: function(in0) {
-	var den = in0;
-	return new Complex((this.re*den.re+this.im*den.im)/(Math.pow(den.re,2)+Math.pow(den.im,2)),
-		(den.re*this.im-den.im*this.re)/(Math.pow(den.re,2)+Math.pow(den.im,2)));},
-//--------------------------------------------------------------------------------------//
-calcProduct: function(in0) {return new Complex(this.re*in0.re-this.im*in0.im, this.re*in0.im+this.im*in0.re);},
-//--------------------------------------------------------------------------------------//
-calcXPowerY: function(in0) {
-	var valor1 = Math.pow(this.abs,in0.re)*Math.exp(-in0.im*this.phiRad);
-	var valor2 = in0.re*this.phiRad + in0.im*Math.log(this.abs);
-	return new Complex(valor1*Math.cos(valor2), valor1*Math.sin(valor2));
-},
-//--------------------------------------------------------------------------------------//
-calcXRootY: function(in0) {
-	var valor0 = new Complex(1/in0.abs*Math.cos(-in0.phiRad), 1/in0.abs*Math.sin(-in0.phiRad));
-	var valor1 = Math.pow(this.abs,valor0.re)*Math.exp(-valor0.im*this.phiRad);
-	var valor2 = valor0.re*this.phiRad + valor0.im*Math.log(this.abs);
-	return new Complex(valor1*Math.cos(valor2), valor1*Math.sin(valor2));
-},
-
-
-
-
-
-	
+	//---Dois argumentos--------------------------------------------------------------------//
+	calcMinus: function(in0) {return new Complex(this.re-in0.re, this.im-in0.im);},
+	//--------------------------------------------------------------------------------------//
+	calcSum: function(in0) {return new Complex(this.re+in0.re, this.im+in0.im);},
+	//--------------------------------------------------------------------------------------//
+	calcDivision: function(in0) {
+		var den = in0;
+		return new Complex((this.re*den.re+this.im*den.im)/(Math.pow(den.re,2)+Math.pow(den.im,2)),
+			(den.re*this.im-den.im*this.re)/(Math.pow(den.re,2)+Math.pow(den.im,2)));},
+	//--------------------------------------------------------------------------------------//
+	calcProduct: function(in0) {return new Complex(this.re*in0.re-this.im*in0.im, this.re*in0.im+this.im*in0.re);},
+	//--------------------------------------------------------------------------------------//
+	calcXPowerY: function(in0) {
+		var valor1 = Math.pow(this.abs,in0.re)*Math.exp(-in0.im*this.phiRad);
+		var valor2 = in0.re*this.phiRad + in0.im*Math.log(this.abs);
+		return new Complex(valor1*Math.cos(valor2), valor1*Math.sin(valor2));
+	},
+	//--------------------------------------------------------------------------------------//
+	calcXRootY: function(in0) {
+		var valor0 = new Complex(1/in0.abs*Math.cos(-in0.phiRad), 1/in0.abs*Math.sin(-in0.phiRad));
+		var valor1 = Math.pow(this.abs,valor0.re)*Math.exp(-valor0.im*this.phiRad);
+		var valor2 = valor0.re*this.phiRad + valor0.im*Math.log(this.abs);
+		return new Complex(valor1*Math.cos(valor2), valor1*Math.sin(valor2));
+	},
 }
 
 

@@ -18,13 +18,14 @@ var cmpx2 = new Complex(Math.random().toFixed(1)*10, Math.random().toFixed(1)*10
 
 When a complex number is created the following properties are filled automatically:
 ```js
-cmpx1["re"] - real part;
-cmpx1["im"] - imaginary part;
-cmpx1["abs"] - absolute value;
-cmpx1[""]:
+Complex.re - real part;
+Complex.im - imaginary part;
+Complex.abs - absolute value;
+Complex.phi - angle in degrees;
+Complex.phiRad - angle in radians
 ```js
 
 
 
 Use the following ling to render the example:
-https://cdn.rawgit.com/jrussi/complexMathLibrary/master/example.html
+[Live example]()https://rawgit.com/jrussi/complexMathLibrary/master/example.html)
