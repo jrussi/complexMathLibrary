@@ -474,19 +474,24 @@ function plotSistema(newdiv) {
 			}
 			else {
 				td.className = "blank";
-				td.innerHTML = (j == maxtd)?("➘"):("");
-				td.onclick = function() {
-					matrizA[matrizA.length] = [];
-					for (var i = 0; i < matrizA[0].length; i++) {
-						matrizA[matrizA.length-1].push(new Complex(0,0));
+				if (j == maxtd) {
+					td.innerHTML = "➘";
+					td.onclick = function() {
+						matrizA[matrizA.length] = [];
+						for (var i = 0; i < matrizA[0].length; i++) {
+							matrizA[matrizA.length-1].push(new Complex(0,0));
+						};
+						for (var i = 0; i < matrizA.length; i++) {
+							matrizA[i].push(new Complex(0,0));
+						};
+						matrizB.push([new Complex(0,0)]);
+						matrizX.push('x<sub>' + (matrizA.length - 1) + '</sub>');
+						plotSistema(newdiv);
 					};
-					for (var i = 0; i < matrizA.length; i++) {
-						matrizA[i].push(new Complex(0,0));
-					};
-					matrizB.push([new Complex(0,0)]);
-					matrizX.push('x<sub>' + (matrizA.length - 1) + '</sub>');
-					plotSistema(newdiv);
-				};
+				}
+				else{
+					td.innerHTML = "";
+				}
 			}
 		}
 	}
