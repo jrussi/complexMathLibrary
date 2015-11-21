@@ -4,7 +4,7 @@ JS Complex Math Library
 This is a complex math library written in javascript.
 
 ##Usage:
-First thing, create a compplex number:
+First thing, create a complex number:
 
 Ex1: Creating a number = 4 + j5 (j is the imaginary number)
 ```js
