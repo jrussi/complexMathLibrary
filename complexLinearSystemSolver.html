@@ -186,7 +186,8 @@ function formatarComplexo(matriz) {
 		else {
 			var saida = valor["abs"].toFixed(2) + '<u><b>/</b>' + valor["phi"].toFixed(2) + 'º</u>';
 		}
-		return saida;
+		//return "<pre>" + saida + "</pre>";
+		return "<span style='white-space: nowrap;'>" + saida + "</span>";
 	}
 
 	function trimZero(valor) {
@@ -632,7 +633,7 @@ function inputMatriz() {
 function entrarComplexo(origem) {
 	var valor = prompt("Digitar o número", "x+jy");
 	if (valor != null) {
-		origem.innerHTML = valor;
+		origem.innerHTML = formatarComplexo([[parseComplexo(valor)]]);
 	}
 	var divMatriz = document.getElementById('divMatriz');
 	divMatriz.style.left = Math.floor((window.innerWidth - divMatriz.offsetWidth)/2) + "px";
